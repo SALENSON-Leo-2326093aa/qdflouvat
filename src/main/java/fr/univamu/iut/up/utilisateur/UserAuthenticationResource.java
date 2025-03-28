@@ -10,18 +10,37 @@ import jakarta.ws.rs.core.Response;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 
+/**
+ * The UserAuthenticationResource class is a Jakarta RESTful Web Services resource
+ * that provides an endpoint for authenticating users.
+ */
 @Path("/authenticate")
 @ApplicationScoped
 public class UserAuthenticationResource {
     private UserAuthenticationService authService;
 
+    /**
+     * Default constructor for the UserAuthenticationResource class.
+     */
     public UserAuthenticationResource() {}
 
+    /**
+     * Constructs a UserAuthenticationResource with the specified UserRepositoryInterface.
+     *
+     * @param userRepo the UserRepositoryInterface to be used by the authentication service
+     */
     @Inject
     public UserAuthenticationResource(UserRepositoryInterface userRepo) {
         this.authService = new UserAuthenticationService(userRepo);
     }
 
+    /**
+     * Authenticates a user based on the provided Basic Authentication credentials.
+     *
+     * @param requestContext the context of the HTTP request
+     * @return a Response indicating whether the authentication was successful
+     * @throws UnsupportedEncodingException if the encoding is not supported
+     */
     @GET
     @Produces("text/plain")
     public Response authenticate(@Context ContainerRequestContext requestContext) throws UnsupportedEncodingException {
